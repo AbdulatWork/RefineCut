@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Typewriter = ({ phrases, speed = 80, pause = 1200 }) => {
-  const [displayed, setDisplayed] = React.useState('');
-  const [phraseIdx, setPhraseIdx] = React.useState(0);
-  const [charIdx, setCharIdx] = React.useState(0);
-  const [deleting, setDeleting] = React.useState(false);
+const Typewriter = ({ phrases, speed = 100, pause = 2000 }) => {
+  const [displayed, setDisplayed] = useState('');
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let timeout;
     const currentPhrase = phrases[phraseIdx];
+    
     if (!deleting && charIdx <= currentPhrase.length) {
       timeout = setTimeout(() => {
         setDisplayed(currentPhrase.slice(0, charIdx));
@@ -26,13 +27,16 @@ const Typewriter = ({ phrases, speed = 80, pause = 1200 }) => {
       setPhraseIdx((phraseIdx + 1) % phrases.length);
       setCharIdx(0);
     }
+    
     return () => clearTimeout(timeout);
   }, [charIdx, deleting, phraseIdx, phrases, speed, pause]);
 
   return (
-    <span className="text-primary font-bold">
-      {displayed}
-      <span className="animate-blink">|</span>
+    <span className="relative">
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
+        {displayed}
+      </span>
+      <span className="animate-pulse text-purple-600 ml-1">|</span>
     </span>
   );
 };
