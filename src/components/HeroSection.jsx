@@ -2,7 +2,6 @@ import React from 'react';
 import { Play } from 'lucide-react';
 import Typewriter from './Typewriter';
 import LiquidEther from './LiquidEther';
-import Logo2 from '../assets/logo_2.png';
 
 const HeroSection = () => {
   return (
@@ -32,9 +31,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        <div className="absolute -top-20 left-12 z-20 ">
-        <img src={Logo2} alt="Logo" className="w-48 h-auto object-contain" />
-      </div>
+        
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
         <h1 className="text-5xl md:text-7xl lg:text-8xl  mb-8 leading-tight">
