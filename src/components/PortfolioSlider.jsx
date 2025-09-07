@@ -71,6 +71,7 @@ const PortfolioSlider = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  // Swipe handlers
   const handleTouchStart = (e) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
@@ -108,18 +109,16 @@ const PortfolioSlider = () => {
     <div className="relative max-w-6xl mx-auto p-4">
       {/* Main Slider Container */}
       <div className="relative mb-8">
-        <div 
-          className="overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-slate-900 to-slate-800"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
+        <div className="overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-slate-900 to-slate-800">
           <div 
             className="flex transition-all duration-700 ease-in-out"
             style={{ 
               transform: `translateX(-${currentIndex * 100}%)`,
               filter: isTransitioning ? 'blur(1px)' : 'blur(0px)'
             }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {videos.map((video, index) => (
               <div key={index} className="w-full flex-shrink-0 relative group">
@@ -130,12 +129,12 @@ const PortfolioSlider = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {/* Gradient Overlay (non-blocking) */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                   
-                  {/* Play Button and Click Handler */}
+                  {/* Play Button */}
                   <div 
-                    className="absolute inset-0 flex items-center justify-center cursor-pointer group-hover:bg-black/20 transition-all duration-300"
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer group-hover:bg-black/20 transition-all duration-300 z-20 pointer-events-auto"
                     onClick={() => handleVideoClick(video.url)}
                   >
                     <div className="bg-white/20 backdrop-blur-sm rounded-full p-6 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300 shadow-lg">
@@ -144,8 +143,11 @@ const PortfolioSlider = () => {
                   </div>
 
                   {/* External Link Icon */}
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 pointer-events-auto">
+                    <div 
+                      className="bg-white/20 backdrop-blur-sm rounded-full p-2 cursor-pointer"
+                      onClick={() => handleVideoClick(video.url)}
+                    >
                       <ExternalLink className="w-5 h-5 text-white" />
                     </div>
                   </div>
@@ -165,7 +167,7 @@ const PortfolioSlider = () => {
           </div>
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows (lower z-index than play button) */}
         <button
           onClick={prevSlide}
           disabled={isTransitioning}
@@ -184,7 +186,7 @@ const PortfolioSlider = () => {
         </button>
       </div>
 
-      {/* Modern Dots Indicator */}
+      {/* Dots Indicator */}
       <div className="flex justify-center items-center space-x-2">
         {videos.map((_, index) => (
           <button
@@ -200,15 +202,6 @@ const PortfolioSlider = () => {
           />
         ))}
       </div>
-
-      {/* Auto-play Status Indicator
-      {!isAutoPlaying && (
-        <div className="text-center mt-4">
-          <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-            Auto-play paused
-          </span>
-        </div>
-      )} */}
 
       {/* Progress Bar */}
       <div className="mt-6 w-full bg-slate-200 rounded-full h-1 overflow-hidden">
