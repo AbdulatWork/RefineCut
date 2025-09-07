@@ -8,21 +8,21 @@ const FloatingContactButton = () => {
     {
       name: 'WhatsApp',
       icon: <MessageCircle size={20} />,
-      url: 'https://wa.me/yourwhatsappnumber',
+      url: 'https://wa.me/+923125112216',
       color: 'text-green-500',
       bgColor: 'hover:bg-green-50'
     },
     {
       name: 'Upwork',
       icon: <ExternalLink size={20} />,
-      url: 'https://www.upwork.com/freelancers/~yourprofile',
+      url: 'https://www.upwork.com/freelancers/~01d6e7fd1689aa5f8a?mp_source=share',
       color: 'text-blue-600',
       bgColor: 'hover:bg-blue-50'
     },
     {
       name: 'Gmail',
       icon: <Mail size={20} />,
-      url: 'mailto:youragency@gmail.com',
+      url: 'mailto:refinecut@gmail.com',
       color: 'text-red-500',
       bgColor: 'hover:bg-red-50'
     }
